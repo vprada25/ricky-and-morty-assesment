@@ -1,10 +1,10 @@
+import { CharacterRepository } from "@domain/repositories/CharacterRepository";
 import { apolloClient } from "../graphql/apolloClient";
 import {
   GET_CHARACTERS,
   GET_CHARACTER_BY_ID,
   GET_CHARACTERS_BY_IDS,
 } from "../graphql/queries";
-import { CharacterRepository } from "@domain/repositories/CharacterRepository";
 import {
   Character,
   CharacterFilters,
@@ -35,13 +35,7 @@ export class GraphQLCharacterRepository implements CharacterRepository {
       },
     });
 
-    // Limit results to 10 characters per page
-    const limitedResults = data.characters.results.slice(0, 10);
-
-    return {
-      ...data.characters,
-      results: limitedResults,
-    };
+    return data.characters;
   }
 
   async getCharacterById(id: string): Promise<Character> {
